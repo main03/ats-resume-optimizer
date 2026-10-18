@@ -47,7 +47,8 @@ export const MIN_INPUT_CHARS = 100;
 export const MAX_RESUME_CHARS = 30_000;
 export const MAX_JOB_DESCRIPTION_CHARS = 20_000;
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
+// Same origin by default: next.config.ts forwards /api/* to the FastAPI backend.
+const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "";
 
 export async function analyzeResume(
   resume: string,
@@ -61,7 +62,7 @@ export async function analyzeResume(
       body: JSON.stringify({ resume, job_description: jobDescription }),
     });
   } catch {
-    throw new Error(`Could not reach the analysis server at ${API_URL}. Is the backend running?`);
+    throw new Error("Could not reach the analysis server. Check your connection and that the backend is running.");
   }
 
   if (!res.ok) {
@@ -88,7 +89,7 @@ export async function extractPdfText(file: File): Promise<ExtractedText> {
   try {
     res = await fetch(`${API_URL}/api/extract-text`, { method: "POST", body });
   } catch {
-    throw new Error(`Could not reach the server at ${API_URL}. Is the backend running?`);
+    throw new Error("Could not reach the server. Check your connection and that the backend is running.");
   }
   if (!res.ok) throw new Error(await errorMessage(res));
   return res.json();

@@ -38,6 +38,7 @@
 }
 
 * { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
 
 body {
   margin: 0;
@@ -51,7 +52,7 @@ h1, h2, h3 { margin: 0 0 0.4rem; line-height: 1.25; }
 h1 { font-size: 1.75rem; }
 h2 { font-size: 1.3rem; }
 h3 { font-size: 1.05rem; }
-p { margin: 0.25rem 0; }
+p { margin: 0.25rem 0; overflow-wrap: anywhere; }
 
 .container { max-width: 1100px; margin: 0 auto; padding: 2rem 1rem 4rem; }
 .page-header { margin-bottom: 1.5rem; }
@@ -215,4 +216,32 @@ details p { margin-top: 0.4rem; }
   .inputs, .keyword-columns { grid-template-columns: 1fr; }
   .score-card { flex-direction: column; align-items: flex-start; }
   .card { padding: 1.1rem; }
+}
+
+/* Phones */
+@media (max-width: 600px) {
+  .container { padding: 1.25rem 0.85rem 2.5rem; }
+  h1 { font-size: 1.4rem; }
+  .card h2 { font-size: 1.1rem; }
+  .how-it-works { flex-direction: column; gap: 0.5rem; }
+
+  /* 16px stops iOS from zooming into the field on focus. */
+  textarea { min-height: 220px; font-size: 16px; }
+  .field-foot { flex-wrap: wrap; row-gap: 0.15rem; }
+  .char-count { margin-left: 0; }
+
+  /* Comfortable tap targets. */
+  .primary { width: 100%; padding: 0.85rem 1rem; font-size: 1rem; }
+  .small { min-height: 40px; padding: 0.45rem 0.85rem; font-size: 0.85rem; }
+  details summary { padding: 0.35rem 0; }
+
+  .score-card { flex-direction: row; align-items: center; gap: 1rem; flex-wrap: wrap; }
+  .score-ring { width: 88px; height: 88px; border-width: 7px; }
+  .score-value { font-size: 1.8rem; }
+  .score-text { flex: 1 1 200px; }
+
+  .keyword-column { padding: 0.8rem; }
+  .improved-row { flex-direction: column; align-items: stretch; }
+  .improved-row .small { align-self: flex-end; }
+  .todo { padding-left: 1.1rem; }
 }

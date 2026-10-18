@@ -84,7 +84,7 @@ export default function TextInput({ id, label, placeholder, value, onChange, max
       >
         <textarea
           id={id}
-          placeholder={`${placeholder}\n\nOr drop a PDF here.`}
+          placeholder={`${placeholder}\n\nOr use “Upload PDF” above.`}
           value={value}
           maxLength={maxLength}
           aria-describedby={`${id}-hint ${id}-status`}

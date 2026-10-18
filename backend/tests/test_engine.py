@@ -102,3 +102,10 @@ def test_keywords_on_one_line_share_its_weight_and_soft_asks_are_preferred():
     assert reqs["SSO"].weight == reqs["Federated ID"].weight == 0.25
     assert reqs["HTML5"].importance == "preferred"
     assert reqs["Python"].importance == "required"
+
+
+def test_phrase_inflection_does_not_overmatch():
+    job = "Requirements\n- Collaborate with product managers\n- Code reviews\n"
+    terms = {r.term for r in engine.analyze(RESUME, job).requirements}
+    assert "product managers" not in terms
+    assert "Code reviews" in terms

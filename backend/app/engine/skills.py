@@ -53,7 +53,11 @@ def compile_term(term: str, exact: bool) -> re.Pattern:
     words = term.split(" ")
     last = words[-1]
     # In phrases, let the last word inflect: "automated testing" also matches "automated tests".
-    tail = re.escape(stem(last)) + r"\w*" if len(words) > 1 and last.isalpha() and len(last) >= 4 else re.escape(last)
+    # Only plural/verb endings, so "management" doesn't also match "managers".
+    tail = re.escape(last)
+    if len(words) > 1 and last.isalpha() and len(last) >= 4:
+        base = re.sub(r"(ing|es|ed|s)$", "", last, flags=re.IGNORECASE)
+        tail = re.escape(base) + r"(?:s|es|ed|ing)?"
     escaped = r"[\s-]+".join([*map(re.escape, words[:-1]), tail])
     return re.compile(_BOUNDARY_BEFORE + escaped + _BOUNDARY_AFTER, re.IGNORECASE)
 

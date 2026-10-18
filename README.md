@@ -141,19 +141,32 @@ uv run uvicorn app.main:app --reload --port 8000
 
 ```bash
 cd frontend
-cp .env.local.example .env.local   # only needed if the backend isn't on localhost:8000
 npm install
 npm run dev
 ```
 
-Open http://localhost:3000.
+Open http://localhost:3000. The frontend forwards `/api/*` to the backend
+(`next.config.ts`), so the browser only ever talks to the frontend's address.
+
+### Using it on your phone
+
+The layout is responsive. To open it from a phone on the same Wi‑Fi:
+
+```bash
+cd frontend && npm run dev:mobile        # listens on your local network
+hostname -I | awk '{print $1}'           # your computer's IP, e.g. 192.168.1.20
+```
+
+Then open `http://<that-ip>:3000` on the phone. The backend can stay on localhost; the
+frontend proxies to it. Allow port 3000 through your firewall if the page doesn't load.
 
 ### Configuration
 
 | Where | Variable | Default | Notes |
 |---|---|---|---|
-| `backend/.env` | `CORS_ORIGINS` | `http://localhost:3000` | Comma-separated frontend origins. |
-| `frontend/.env.local` | `NEXT_PUBLIC_API_URL` | `http://localhost:8000` | Backend URL. |
+| `frontend/.env.local` | `BACKEND_URL` | `http://localhost:8000` | Where the frontend forwards `/api` requests. |
+| `frontend/.env.local` | `NEXT_PUBLIC_API_URL` | (unset) | Optional: call the backend directly from the browser instead of via the proxy. |
+| `backend/.env` | `CORS_ORIGINS` | `http://localhost:3000` | Only needed with `NEXT_PUBLIC_API_URL`. |
 
 ## Tests
 
