@@ -1,9 +1,10 @@
 import { AnalyzeResponse, Requirement } from "@/lib/api";
+import Section from "./Section";
 
 const TOP_ACTIONS = 3;
 
 // A condensed view of the report: what's missing and the few changes that matter most.
-export default function GapSummary({ result }: { result: AnalyzeResponse }) {
+export default function GapSummary({ result, step }: { result: AnalyzeResponse; step: number }) {
   const keywords = result.requirements.filter((r) => r.category !== "responsibility");
   const responsibilities = result.requirements.filter((r) => r.category === "responsibility");
 
@@ -17,8 +18,11 @@ export default function GapSummary({ result }: { result: AnalyzeResponse }) {
   const nothingMissing = missingRequired.length + missingPreferred.length + weak.length === 0;
 
   return (
-    <section className="card summary-card" id="summary">
-      <h3>Summary: what&apos;s missing</h3>
+    <Section
+      id="summary" step={step} title="Summary: what's missing" className="summary-card"
+      purpose="The whole report in one place, if you don't have time to read every section."
+      action="Fix the red items first, then the amber ones."
+    >
       <p className="summary-headline">
         {nothingMissing
           ? "Your resume covers every keyword this posting asks for."
@@ -39,7 +43,7 @@ export default function GapSummary({ result }: { result: AnalyzeResponse }) {
 
       {topActions.length > 0 && (
         <>
-          <h4>Do these first</h4>
+          <h4 className="subheading">Do these first</h4>
           <ol className="top-actions">
             {topActions.map((r, i) => (
               <li key={i}>{r.suggestion}</li>
@@ -47,28 +51,20 @@ export default function GapSummary({ result }: { result: AnalyzeResponse }) {
           </ol>
         </>
       )}
-    </section>
+    </Section>
   );
 }
 
 function SummaryRow({
-  label,
-  items,
-  tone,
-}: {
-  label: string;
-  items: Requirement[];
-  tone: "missing" | "partial" | "neutral";
-}) {
+  label, items, tone,
+}: { label: string; items: Requirement[]; tone: "missing" | "partial" | "neutral" }) {
   if (items.length === 0) return null;
   return (
     <div className="summary-row">
       <span className="summary-label">{label}</span>
       <div className="summary-chips">
         {items.map((r, i) => (
-          <span key={`${r.term}-${i}`} className={`pill ${tone}`}>
-            {r.term}
-          </span>
+          <span key={`${r.term}-${i}`} className={`pill ${tone}`}>{r.term}</span>
         ))}
       </div>
     </div>

@@ -41,9 +41,14 @@ export default function Home() {
       <header className="page-header">
         <h1>ATS Resume Optimizer</h1>
         <p className="muted">
-          Paste your resume and a job description to see which requirements you already
-          cover, what&apos;s missing, and how to improve your resume truthfully.
+          See how well your resume fits a specific job, what&apos;s missing, and how to improve
+          it truthfully, without keyword stuffing.
         </p>
+        <ol className="how-it-works">
+          <li><span className="step" aria-hidden>1</span>Paste your resume as plain text</li>
+          <li><span className="step" aria-hidden>2</span>Paste the full job description</li>
+          <li><span className="step" aria-hidden>3</span>Get a score, the gaps, and what to change</li>
+        </ol>
       </header>
 
       <section className="inputs">
@@ -51,6 +56,7 @@ export default function Home() {
           id="resume"
           label="Your resume"
           placeholder="Paste your resume as plain text…"
+          hint="Copy everything from your resume file, including headings like Experience and Skills. Formatting doesn't matter."
           value={resume}
           onChange={setResume}
           maxLength={MAX_RESUME_CHARS}
@@ -59,6 +65,7 @@ export default function Home() {
           id="job"
           label="Job description"
           placeholder="Paste the full job description…"
+          hint="Include the requirements and nice-to-have sections. Company and benefits text is ignored automatically."
           value={jobDescription}
           onChange={setJobDescription}
           maxLength={MAX_JOB_DESCRIPTION_CHARS}
@@ -84,6 +91,10 @@ export default function Home() {
       )}
 
       {result && !loading && <Report result={result} />}
+
+      <p className="privacy muted small-text">
+        Your resume and the job description are analyzed on the server and never stored.
+      </p>
     </main>
   );
 }
