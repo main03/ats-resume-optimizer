@@ -4,7 +4,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
-from . import analyzer
+from . import analyzer, engine
 from .config import settings
 from .models import AnalyzeRequest, AnalyzeResponse
 from .scoring import postprocess
@@ -26,10 +26,15 @@ async def analysis_error_handler(_, exc: analyzer.AnalysisError) -> JSONResponse
 
 @app.get("/api/health")
 async def health() -> dict:
-    return {"status": "ok"}
+    return {"status": "ok", "engine": "claude" if settings.use_claude else "builtin"}
 
 
 @app.post("/api/analyze", response_model=AnalyzeResponse)
 async def analyze(request: AnalyzeRequest) -> AnalyzeResponse:
-    analysis = await analyzer.analyze(request.resume, request.job_description)
-    return AnalyzeResponse(**postprocess(analysis, request.resume))
+    if settings.use_claude:
+        analysis = await analyzer.analyze(request.resume, request.job_description)
+        engine_name = "claude"
+    else:
+        analysis = engine.analyze(request.resume, request.job_description)
+        engine_name = "builtin"
+    return AnalyzeResponse(engine=engine_name, **postprocess(analysis, request.resume))

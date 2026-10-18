@@ -5,7 +5,7 @@ import logging
 import anthropic
 
 from .config import settings
-from .models import LLMAnalysis
+from .models import Analysis
 
 logger = logging.getLogger(__name__)
 
@@ -79,7 +79,7 @@ def build_user_message(resume: str, job_description: str) -> str:
     )
 
 
-async def analyze(resume: str, job_description: str) -> LLMAnalysis:
+async def analyze(resume: str, job_description: str) -> Analysis:
     try:
         response = await get_client().beta.messages.parse(
             model=settings.model,
@@ -88,7 +88,7 @@ async def analyze(resume: str, job_description: str) -> LLMAnalysis:
             messages=[{"role": "user", "content": build_user_message(resume, job_description)}],
             thinking={"type": "adaptive"},
             output_config={"effort": settings.effort},
-            output_format=LLMAnalysis,
+            output_format=Analysis,
             # Retry on a recommended model if a safety classifier declines the request.
             betas=["server-side-fallback-2026-07-01"],
             fallbacks="default",

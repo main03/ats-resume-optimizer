@@ -1,14 +1,14 @@
-"""Deterministic post-processing: verify LLM claims against the resume and compute the score.
+"""Deterministic post-processing: verify claims against the resume and compute the score.
 
-The LLM decides *what* the job requires and how the resume relates to it; this module
-makes sure every "matched" claim is backed by text that actually exists in the resume,
-and computes the score with a transparent formula instead of asking the LLM for a number.
+Whichever engine produced the analysis (built-in or Claude), this module makes sure every
+"matched" claim is backed by text that actually exists in the resume, and computes the
+score with a transparent formula.
 """
 
 import re
 import unicodedata
 
-from .models import LLMAnalysis, Requirement, RewrittenBullet, ScoreBreakdown
+from .models import Analysis, Requirement, RewrittenBullet, ScoreBreakdown
 
 IMPORTANCE_WEIGHT = {"required": 3, "preferred": 1}
 STATUS_CREDIT = {"matched": 1.0, "partial": 0.5, "missing": 0.0}
@@ -79,7 +79,7 @@ def compute_score(requirements: list[Requirement]) -> ScoreBreakdown:
     return ScoreBreakdown(score=score, **counts, explanation=explanation, disclaimer=DISCLAIMER)
 
 
-def postprocess(analysis: LLMAnalysis, resume: str) -> dict:
+def postprocess(analysis: Analysis, resume: str) -> dict:
     requirements = verify_requirements(analysis.requirements, resume)
     return {
         "role_title": analysis.role_title,

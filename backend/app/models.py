@@ -32,7 +32,7 @@ class AnalyzeRequest(BaseModel):
         return value.strip() if isinstance(value, str) else value
 
 
-# ---------- LLM structured output ----------
+# ---------- Analysis (built-in engine output / Claude structured output) ----------
 
 
 class Requirement(BaseModel):
@@ -64,7 +64,7 @@ class RewrittenBullet(BaseModel):
     keywords_used: list[str]
 
 
-class LLMAnalysis(BaseModel):
+class Analysis(BaseModel):
     role_title: str
     requirements: list[Requirement]
     highlights: list[Highlight]
@@ -85,6 +85,7 @@ class ScoreBreakdown(BaseModel):
 
 
 class AnalyzeResponse(BaseModel):
+    engine: Literal["builtin", "claude"]
     role_title: str
     score: ScoreBreakdown
     requirements: list[Requirement]
