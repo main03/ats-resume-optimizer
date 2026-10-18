@@ -1,5 +1,6 @@
 import { AnalyzeResponse, Requirement } from "@/lib/api";
 import CopyButton from "./CopyButton";
+import GapSummary from "./GapSummary";
 
 const SECTION_LABELS = {
   summary: "Summary",
@@ -33,6 +34,9 @@ export default function Report({ result }: { result: AnalyzeResponse }) {
             <strong>How this is calculated:</strong> {score.explanation}
           </p>
           <p className="muted small-text">{score.disclaimer}</p>
+          <a className="jump-link small-text" href="#summary">
+            Short on time? Jump to the summary ↓
+          </a>
         </div>
       </section>
 
@@ -131,6 +135,7 @@ export default function Report({ result }: { result: AnalyzeResponse }) {
           </ul>
         )}
       </section>
+      <GapSummary result={result} />
     </div>
   );
 }

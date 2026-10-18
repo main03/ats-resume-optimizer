@@ -177,3 +177,15 @@ blockquote { margin: 0.35rem 0 0; padding-left: 0.6rem; border-left: 2px solid v
   .inputs, .grid { grid-template-columns: 1fr; }
   .score-card { flex-direction: column; align-items: flex-start; }
 }
+
+/* Summary */
+.jump-link { display: inline-block; margin-top: 0.4rem; color: var(--accent); text-decoration: none; font-weight: 600; }
+.jump-link:hover { text-decoration: underline; }
+.summary-card { border: 2px solid var(--accent); scroll-margin-top: 1rem; }
+.summary-headline { font-weight: 600; margin-bottom: 0.75rem; }
+.summary-row { display: flex; gap: 0.75rem; align-items: baseline; margin: 0.5rem 0; flex-wrap: wrap; }
+.summary-label { font-size: 0.8rem; font-weight: 600; color: var(--muted); min-width: 170px; }
+.summary-chips { display: flex; gap: 0.35rem; flex-wrap: wrap; flex: 1; }
+.summary-chips .pill { text-transform: none; }
+.summary-card h4 { margin: 1rem 0 0.4rem; font-size: 0.95rem; }
+.top-actions { margin: 0; padding-left: 1.2rem; display: flex; flex-direction: column; gap: 0.35rem; }
