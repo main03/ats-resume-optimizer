@@ -185,6 +185,8 @@ details p { margin-top: 0.4rem; }
 .keyword-column ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.4rem; }
 .keyword-column li { display: flex; flex-direction: column; font-size: 0.92rem; }
 .term { font-weight: 600; }
+.keyword-group + .keyword-group { margin-top: 0.85rem; }
+.group-label { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); margin: 0 0 0.35rem; }
 .note { font-size: 0.8rem; color: var(--muted); }
 .req-dot { color: var(--accent); font-size: 0.7rem; }
 

@@ -116,6 +116,10 @@ from the resume. The backend then:
    resume is removed.
 3. **Scores deterministically.** `score = Σ(weight × credit) / Σ weight × 100`, with
    required = 2, preferred = 1; found = 1, written differently = 0.5, missing = 0.
+   **Each requirement line counts once:** keywords listed on the same line ("SSO and
+   Federated ID") share its weight, so one bullet can't be penalized several times.
+   Lines asking only for "understanding of" / "familiarity with" count as preferred,
+   unless qualified ("strong understanding"). Lines a PDF wrapped are rejoined first.
 
 The score measures keyword and requirement coverage only. Every ATS works differently,
 so no tool can guarantee a pass, an interview or shortlisting. Keyword coverage is the

@@ -88,3 +88,17 @@ def test_responsibilities_count_as_preferred():
     reqs = {r.term: r.importance for r in engine.analyze(RESUME, job).requirements}
     assert reqs["Refactor"] == "preferred"
     assert reqs["Python"] == "required"
+
+
+def test_keywords_on_one_line_share_its_weight_and_soft_asks_are_preferred():
+    job = (
+        "Requirements\n"
+        "- User authentication and authorization between multiple systems\n"
+        "including SSO and Federated ID systems.\n"   # wrapped line, as in PDFs
+        "- Basic understanding of HTML5\n"
+        "- Strong understanding of Python\n"
+    )
+    reqs = {r.term: r for r in engine.analyze(RESUME, job).requirements}
+    assert reqs["SSO"].weight == reqs["Federated ID"].weight == 0.25
+    assert reqs["HTML5"].importance == "preferred"
+    assert reqs["Python"].importance == "required"

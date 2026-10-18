@@ -35,6 +35,13 @@ PREFERRED_CUES = re.compile(
     r"|good to have|familiarity with|exposure to)\b",
     re.IGNORECASE,
 )
+SOFT_CUES = re.compile(
+    r"\b(understanding|awareness|familiar|familiarity|basic knowledge|general knowledge)\b",
+    re.IGNORECASE,
+)
+STRONG_QUALIFIERS = re.compile(
+    r"\b(strong|solid|deep|proven|extensive|excellent|thorough|expert|advanced)\b", re.IGNORECASE
+)
 REQUIRED_CUES = re.compile(
     r"\b(must|required|requirement|minimum|at least|essential|mandatory)\b", re.IGNORECASE
 )
@@ -99,18 +106,37 @@ def _importance(line: Line) -> str:
         return "preferred"
     if REQUIRED_CUES.search(line.text):
         return "required"
+    # "Understanding of X" is a lighter ask than "strong proficiency in X".
+    if SOFT_CUES.search(line.text) and not STRONG_QUALIFIERS.search(line.text):
+        return "preferred"
     # Responsibilities describe the job, not what candidates are screened on.
     return "preferred" if line.section in ("preferred", "responsibility") else "required"
 
 
+def _join_wrapped(lines: list[Line]) -> list[Line]:
+    """PDFs wrap long bullets onto several lines; a line starting in lowercase continues
+    the previous one, so the bullet is treated as one requirement."""
+    out: list[Line] = []
+    for ln in lines:
+        prev = out[-1] if out else None
+        if (
+            prev and ln.section == prev.section and not ln.is_bullet
+            and ln.text[:1].islower() and not prev.text.endswith((".", ":", ";"))
+        ):
+            out[-1] = Line(f"{prev.text} {ln.text}", prev.section, prev.is_bullet)
+        else:
+            out.append(ln)
+    return out
+
+
 def parse_job(job_description: str) -> JobProfile:
-    lines = [
+    lines = _join_wrapped([
         ln for ln in split_sections(
             job_description, JD_HEADERS, default="general",
             is_header_candidate=_is_heading_candidate,
         )
         if ln.section != "ignore"
-    ]
+    ])
     terms = [
         *_skill_terms(lines),
         *_acronym_terms(lines),

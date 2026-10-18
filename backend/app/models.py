@@ -44,6 +44,10 @@ class Requirement(BaseModel):
         description="Exact quote copied from the resume that supports the status, or empty string."
     )
     note: str = Field(description="One sentence explaining the status.")
+    weight: float = Field(
+        default=1.0,
+        description="Share of its job-description line; keywords listed on one line share its points.",
+    )
 
 
 class Recommendation(BaseModel):

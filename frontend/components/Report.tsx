@@ -50,7 +50,7 @@ export default function Report({ result }: { result: AnalyzeResponse }) {
           <KeywordColumn title="Written differently" icon="≈" tone="partial" items={different}
             empty="None. Your wording matches the job." showNote />
           <KeywordColumn title="Missing" icon="✗" tone="missing" items={missing}
-            empty="Nothing missing." />
+            empty="Nothing missing." groupByImportance />
         </div>
         {concepts.length > 0 && (
           <div className="concepts">
@@ -111,7 +111,7 @@ export default function Report({ result }: { result: AnalyzeResponse }) {
 }
 
 function KeywordColumn({
-  title, icon, tone, items, empty, showNote = false,
+  title, icon, tone, items, empty, showNote = false, groupByImportance = false,
 }: {
   title: string;
   icon: string;
@@ -119,7 +119,14 @@ function KeywordColumn({
   items: Requirement[];
   empty: string;
   showNote?: boolean;
+  groupByImportance?: boolean;
 }) {
+  const groups = groupByImportance
+    ? [
+        { label: "Required", items: items.filter((r) => r.importance === "required") },
+        { label: "Nice to have", items: items.filter((r) => r.importance === "preferred") },
+      ].filter((g) => g.items.length > 0)
+    : [{ label: "", items }];
   return (
     <div className={`keyword-column ${tone}`}>
       <h3>
@@ -128,17 +135,22 @@ function KeywordColumn({
       {items.length === 0 ? (
         <p className="muted small-text">{empty}</p>
       ) : (
-        <ul>
-          {items.map((r, i) => (
-            <li key={`${r.term}-${i}`} title={r.resume_evidence ? `In your resume: “${r.resume_evidence}”` : r.note}>
-              <span className="term">
-                {r.term}
-                {r.importance === "required" && <span className="req-dot" aria-label="required"> ●</span>}
-              </span>
-              {showNote && r.note && <span className="note">{r.note}</span>}
-            </li>
-          ))}
-        </ul>
+        groups.map((g) => (
+          <div key={g.label} className="keyword-group">
+            {g.label && <p className="group-label">{g.label}</p>}
+            <ul>
+              {g.items.map((r, i) => (
+                <li key={`${r.term}-${i}`} title={r.resume_evidence ? `In your resume: “${r.resume_evidence}”` : r.note}>
+                  <span className="term">
+                    {r.term}
+                    {r.importance === "required" && <span className="req-dot" aria-label="required"> ●</span>}
+                  </span>
+                  {showNote && r.note && <span className="note">{r.note}</span>}
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))
       )}
     </div>
   );

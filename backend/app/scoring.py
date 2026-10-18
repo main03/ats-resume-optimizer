@@ -66,17 +66,18 @@ def compute_score(requirements: list[Requirement]) -> ScoreBreakdown:
     counts = {"matched": 0, "partial": 0, "missing": 0}
     earned = possible = 0.0
     for req in requirements:
-        weight = IMPORTANCE_WEIGHT[req.importance]
+        weight = IMPORTANCE_WEIGHT[req.importance] * req.weight
         possible += weight
         earned += weight * STATUS_CREDIT[req.status]
         counts[req.status] += 1
 
     score = round(100 * earned / possible) if possible else 0
     explanation = (
-        f"The share of the job's {len(requirements)} keywords and qualifications that your "
-        f"resume contains. Required ones count double. A keyword written differently "
-        f"(e.g. k8s instead of Kubernetes) counts half, because many ATS match words literally. "
-        f"You scored {earned:g} of {possible:g} points."
+        f"The share of the job's requirements your resume covers. Each requirement line in the "
+        f"job counts once; if it lists several keywords (e.g. “SSO and Federated ID”), they "
+        f"share its points. Required lines count double. A keyword written differently "
+        f"(e.g. k8s instead of Kubernetes) gets half credit, because many ATS match words "
+        f"literally. You scored {earned:.1f} of {possible:.1f} points."
     )
     return ScoreBreakdown(score=score, **counts, explanation=explanation, disclaimer=DISCLAIMER)
 
