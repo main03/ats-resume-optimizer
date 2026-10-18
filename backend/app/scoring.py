@@ -10,7 +10,7 @@ import unicodedata
 
 from .models import Analysis, Requirement, RewrittenBullet, ScoreBreakdown
 
-IMPORTANCE_WEIGHT = {"required": 3, "preferred": 1}
+IMPORTANCE_WEIGHT = {"required": 2, "preferred": 1}
 STATUS_CREDIT = {"matched": 1.0, "partial": 0.5, "missing": 0.0}
 PRIORITY_ORDER = {"high": 0, "medium": 1, "low": 2}
 
@@ -70,11 +70,10 @@ def compute_score(requirements: list[Requirement]) -> ScoreBreakdown:
 
     score = round(100 * earned / possible) if possible else 0
     explanation = (
-        f"Weighted coverage of {len(requirements)} job requirements. Required items count "
-        f"{IMPORTANCE_WEIGHT['required']}x, preferred items 1x. A clearly demonstrated item "
-        f"earns full credit, a partially demonstrated or weakly worded one earns half, and a "
-        f"missing one earns none. \"Matched\" is only granted when the supporting text is "
-        f"found verbatim in your resume. Result: {earned:g} of {possible:g} points."
+        f"The share of the job's {len(requirements)} keywords and qualifications that your "
+        f"resume contains. Required ones count double. A keyword written differently "
+        f"(e.g. k8s instead of Kubernetes) counts half, because many ATS match words literally. "
+        f"You scored {earned:g} of {possible:g} points."
     )
     return ScoreBreakdown(score=score, **counts, explanation=explanation, disclaimer=DISCLAIMER)
 
@@ -85,7 +84,6 @@ def postprocess(analysis: Analysis, resume: str) -> dict:
         "role_title": analysis.role_title,
         "score": compute_score(requirements),
         "requirements": requirements,
-        "highlights": analysis.highlights,
         "recommendations": sorted(
             analysis.recommendations, key=lambda r: PRIORITY_ORDER[r.priority]
         ),

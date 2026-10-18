@@ -46,11 +46,11 @@ def test_matched_with_fabricated_evidence_is_downgraded():
 
 def test_score_weights_required_over_preferred():
     breakdown = compute_score([
-        req("A", "matched"),                         # 3 / 3
-        req("B", "partial"),                         # 1.5 / 3
+        req("A", "matched"),                         # 2 / 2
+        req("B", "partial"),                         # 1 / 2
         req("C", "missing", importance="preferred"), # 0 / 1
     ])
-    assert breakdown.score == round(100 * 4.5 / 7)
+    assert breakdown.score == round(100 * 3 / 5)
     assert (breakdown.matched, breakdown.partial, breakdown.missing) == (1, 1, 1)
     assert "guarantee" in breakdown.disclaimer
 

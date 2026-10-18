@@ -7,7 +7,7 @@ from ..models import Requirement
 from .job import JobTerm, degree_levels
 from .resume import LIST_SECTIONS, ResumeProfile, experience_years
 from .skills import find_skills, same_wording
-from .text import Line, tokens
+from .text import Line
 
 EVIDENCE_WINDOW = 90  # characters of context on each side of a keyword
 
@@ -25,7 +25,7 @@ class Match:
     """A Requirement plus the details the advice step needs."""
     requirement: Requirement
     term: JobTerm
-    reason: str = ""  # "wording" | "listed_only" | ""
+    reason: str = ""  # "wording" | "related" | ""
     resume_surface: str = ""
     occurrences: list[Occurrence] | None = None
 
@@ -42,8 +42,6 @@ def match_all(terms: list[JobTerm], resume: ResumeProfile) -> list[Match]:
             out.append(_match_years(term, resume))
         elif term.kind == "degree":
             out.append(_match_degree(term, resume))
-        elif term.kind == "responsibility":
-            out.append(_match_responsibility(term, resume))
     return out
 
 
@@ -94,8 +92,8 @@ def _match_skill(term: JobTerm, occurrences: list[Occurrence]) -> Match:
     if not synonyms:
         occ = occurrences[0]
         note = (
-            f"Your resume mentions the related “{occ.surface}”, but the posting asks for "
-            f"“{term.term}”. Only use the posting's term if it accurately describes your work."
+            f"You wrote the related “{occ.surface}”. The job asks for “{term.term}”, which "
+            "isn't quite the same."
         )
         return Match(
             _requirement(term, "partial", evidence_snippet(occ), note),
@@ -103,30 +101,20 @@ def _match_skill(term: JobTerm, occurrences: list[Occurrence]) -> Match:
         )
     occurrences = synonyms
 
+    # ATS search the whole resume, so a keyword in the skills list counts as found.
     same = [o for o in occurrences if same_wording(o.surface, term.term)]
-    in_context = [o for o in (same or occurrences) if o.line.section not in LIST_SECTIONS]
-
-    if same and in_context:
-        occ = in_context[0]
+    if same:
+        in_context = [o for o in same if o.line.section not in LIST_SECTIONS]
+        occ = (in_context or same)[0]
         return Match(
             _requirement(term, "matched", evidence_snippet(occ), _where(occ)),
             term, occurrences=occurrences,
         )
-    if not same:
-        occ = (in_context or occurrences)[0]
-        note = (
-            f"Your resume says “{occ.surface}” but the posting says “{term.term}”. "
-            "ATS keyword filters often look for the exact wording."
-        )
-        return Match(
-            _requirement(term, "partial", evidence_snippet(occ), note),
-            term, reason="wording", resume_surface=occ.surface, occurrences=occurrences,
-        )
-    occ = same[0]
-    note = "Only listed in your skills/education section, not shown in any experience bullet."
+    occ = next((o for o in occurrences if o.line.section not in LIST_SECTIONS), occurrences[0])
+    note = f"You wrote “{occ.surface}”. The job says “{term.term}”."
     return Match(
         _requirement(term, "partial", evidence_snippet(occ), note),
-        term, reason="listed_only", occurrences=occurrences,
+        term, reason="wording", resume_surface=occ.surface, occurrences=occurrences,
     )
 
 
@@ -135,6 +123,7 @@ def _where(occ: Occurrence) -> str:
         "experience": "Shown in your work experience.",
         "projects": "Shown in your projects.",
         "summary": "Mentioned in your summary.",
+        "skills": "Listed in your skills section.",
     }.get(occ.line.section, "Found in your resume.")
 
 
@@ -169,26 +158,3 @@ def _match_degree(term: JobTerm, resume: ResumeProfile) -> Match:
     if best_level:
         return Match(_requirement(term, "partial", best_line, note), term)
     return Match(_requirement(term, "missing", "", note), term)
-
-
-def _match_responsibility(term: JobTerm, resume: ResumeProfile) -> Match:
-    wanted = tokens(term.lines[0])
-    best_score, best_line = 0.0, None
-    for line in resume.lines:
-        if line.section in LIST_SECTIONS or len(line.text) < 20:
-            continue
-        score = len(wanted & tokens(line.text)) / max(len(wanted), 1)
-        if score > best_score:
-            best_score, best_line = score, line
-    if best_line and best_score >= 0.5:
-        return Match(_requirement(
-            term, "matched", best_line.text, "Your experience describes similar work."
-        ), term)
-    if best_line and best_score >= 0.25:
-        return Match(_requirement(
-            term, "partial", best_line.text,
-            "Some overlap. If accurate, describe this work using the posting's terms.",
-        ), term)
-    return Match(_requirement(
-        term, "missing", "", "No similar work found in your resume."
-    ), term)

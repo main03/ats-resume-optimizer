@@ -12,11 +12,6 @@ export interface Requirement {
   note: string;
 }
 
-export interface Highlight {
-  experience: string;
-  why_relevant: string;
-}
-
 export interface Recommendation {
   section: "summary" | "skills" | "experience" | "other";
   priority: Priority;
@@ -43,7 +38,6 @@ export interface AnalyzeResponse {
   role_title: string;
   score: ScoreBreakdown;
   requirements: Requirement[];
-  highlights: Highlight[];
   recommendations: Recommendation[];
   rewritten_bullets: RewrittenBullet[];
 }

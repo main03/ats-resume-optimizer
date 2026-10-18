@@ -69,12 +69,11 @@ ACRONYM_STOPLIST = {
 
 MAX_SKILLS = 25
 MAX_ACRONYMS = 6
-MAX_RESPONSIBILITIES = 6
 
 
 @dataclass
 class JobTerm:
-    kind: str  # "skill" | "acronym" | "years" | "degree" | "responsibility"
+    kind: str  # "skill" | "acronym" | "years" | "degree"
     term: str  # wording used by the job description
     category: str
     importance: str
@@ -116,7 +115,6 @@ def parse_job(job_description: str) -> JobProfile:
         *_acronym_terms(lines),
         *_years_terms(lines),
         *_degree_terms(lines),
-        *_responsibility_terms(lines),
     ]
     return JobProfile(role_title=_role_title(job_description), terms=terms)
 
@@ -204,26 +202,6 @@ def _degree_terms(lines: list[Line]) -> list[JobTerm]:
                 value=level, lines=[line.text],
             )]
     return []
-
-
-def _responsibility_terms(lines: list[Line]) -> list[JobTerm]:
-    out = []
-    for line in lines:
-        if line.section == "responsibility" and len(line.text) >= 25:
-            out.append(JobTerm(
-                "responsibility", _shorten(line.text), "responsibility", "preferred",
-                lines=[line.text],
-            ))
-        if len(out) == MAX_RESPONSIBILITIES:
-            break
-    return out
-
-
-def _shorten(text: str, limit: int = 90) -> str:
-    text = text.rstrip(".;")
-    if len(text) <= limit:
-        return text
-    return text[:limit].rsplit(" ", 1)[0] + "…"
 
 
 TITLE_LABEL = re.compile(r"^(?:job\s+title|position|role|title)\s*:\s*(.+)$", re.IGNORECASE)

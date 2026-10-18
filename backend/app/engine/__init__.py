@@ -5,7 +5,7 @@ Pipeline: parse the job description into terms (job.py) -> parse the resume into
 """
 
 from ..models import Analysis
-from .advice import highlights, recommendations, rewrites
+from .advice import recommendations, rewrites
 from .job import parse_job
 from .match import match_all
 from .resume import parse_resume
@@ -18,7 +18,6 @@ def analyze(resume: str, job_description: str) -> Analysis:
     return Analysis(
         role_title=job.role_title,
         requirements=[m.requirement for m in matches],
-        highlights=highlights(matches),
-        recommendations=recommendations(matches, profile, resume, job.role_title),
+        recommendations=recommendations(matches, profile, resume),
         rewritten_bullets=rewrites(matches),
     )

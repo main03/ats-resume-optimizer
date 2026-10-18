@@ -12,7 +12,7 @@ APIs, no API keys, and no database. Nothing you paste is stored or sent anywhere
 ```
 frontend/  Next.js + React + TypeScript (single page)
   app/page.tsx            inputs, loading/error state
-  components/Report.tsx   score, keyword sections, recommendations, bullet rewrites
+  components/Report.tsx   score, keyword lists (found / different / missing), to-do list
   lib/api.ts              API types + fetch client
 
 backend/   FastAPI + Pydantic
@@ -23,7 +23,7 @@ backend/   FastAPI + Pydantic
     resume.py             resume sections + years of experience from date ranges
     skills.py             keyword search over data/skills.json
     match.py              matched / partial / missing per requirement
-    advice.py             recommendations, highlights, wording-swap rewrites
+    advice.py             to-do list and wording-swap rewrites
     text.py               shared text helpers (sections, tokens, stemming)
   app/data/skills.json    skills dictionary with synonyms (edit to extend)
   app/scoring.py          evidence verification + deterministic score
@@ -33,27 +33,33 @@ backend/   FastAPI + Pydantic
 Flow: frontend → `POST /api/analyze` → the engine produces an analysis → `scoring.py`
 verifies it and computes the score → frontend renders the report.
 
+## What the report shows
+
+1. **Score:** the share of the job's keywords your resume contains, with a one-line verdict.
+2. **Keywords**, in three lists:
+   - **Found:** the keyword appears anywhere in your resume, Skills section included,
+     the same way an ATS searches.
+   - **Written differently:** you used a synonym (k8s vs Kubernetes) or a related term
+     (CI vs CI/CD). A literal-match ATS may miss these.
+   - **Missing:** not in your resume.
+3. **What to do:** a short, prioritized list of ATS-relevant fixes, plus copy-ready
+   bullet fixes.
+
 ## How the engine works
 
-1. **Job description.** Detects sections ("Requirements", "Nice to have",
-   "Responsibilities"; "About us" and "Benefits" are ignored, so the company's own tech
-   stack isn't mistaken for a requirement). Each keyword is marked required or preferred
-   from its section and cues like "a plus" or "must". It also extracts years of
-   experience, degree level, unknown acronyms (e.g. HIPAA) and responsibility bullets.
-2. **Resume.** Splits into sections (Summary, Experience, Skills, Education…) and adds up
-   the date ranges of your roles, merging overlaps. Markdown `**bold**` and Unicode bold
-   letters (𝐏𝐲𝐭𝐡𝐨𝐧) are normalized before matching.
-3. **Matching.**
-   - **matched:** the posting's wording appears in your experience, projects or summary.
-   - **partial:** the term appears only in a skills list, under a synonym (k8s vs
-     Kubernetes), or as a related term (CI vs CI/CD).
-   - **missing:** not found.
-
-   Responsibilities are matched by word overlap with your bullets. Because that is
-   approximate, they always count as preferred (1×) in the score.
-4. **Advice.** Prioritized recommendations for the summary, skills and experience
-   sections, plus resume-quality checks: weak openers ("Responsible for…"), bullets
-   without numbers, Unicode "bold" letters ATS can't read, and a missing skills section.
+1. **Job description.** Detects sections ("Requirements", "Nice to have"; "About us" and
+   "Benefits" are ignored, so the company's own tech stack isn't mistaken for a
+   requirement). Each keyword is marked required or preferred from its section and cues
+   like "a plus" or "must". It also extracts years of experience, degree level and
+   unknown acronyms (e.g. HIPAA). Soft skills are left out: ATS keyword filters target
+   hard skills, tools, certifications and qualifications.
+2. **Resume.** Splits into sections and adds up the date ranges of your roles, merging
+   overlaps. Markdown `**bold**` and Unicode bold letters (𝐏𝐲𝐭𝐡𝐨𝐧) are normalized before
+   matching.
+3. **Matching.** Each keyword is found, written differently, or missing (see above).
+4. **To-do list.** Only fixes that affect ATS matching: wording to change, missing
+   required and nice-to-have keywords, experience/degree gaps, and formatting that ATS
+   can't read (Unicode bold letters, a missing Skills section).
 
 ### Truthful rewrites
 
@@ -90,10 +96,11 @@ from the resume. The backend then:
 2. **Drops invalid rewrites.** A bullet rewrite whose original isn't actually in the
    resume is removed.
 3. **Scores deterministically.** `score = Σ(weight × credit) / Σ weight × 100`, with
-   required = 3, preferred = 1, matched = 1, partial = 0.5, missing = 0.
+   required = 2, preferred = 1; found = 1, written differently = 0.5, missing = 0.
 
-The score measures keyword and requirement coverage only. It does not guarantee an
-interview or shortlisting.
+The score measures keyword and requirement coverage only. Every ATS works differently,
+so no tool can guarantee a pass, an interview or shortlisting. Keyword coverage is the
+part they all share.
 
 ## Running locally
 
@@ -141,5 +148,4 @@ enforced in both the UI and the API (`app/models.py`).
 
 - Skills outside `skills.json` are only detected if they're acronyms (e.g. HIPAA). Add
   domain-specific terms to the dictionary for best results.
-- Responsibility matching uses word overlap, so it's an approximation.
 - Rewrites are limited to wording swaps; the engine doesn't write new bullets.

@@ -9,7 +9,7 @@ MAX_RESUME_CHARS = 30_000
 MAX_JOB_DESCRIPTION_CHARS = 20_000
 
 Category = Literal[
-    "technical_skill", "tool", "qualification", "responsibility", "soft_skill", "domain"
+    "technical_skill", "tool", "qualification", "domain"
 ]
 Importance = Literal["required", "preferred"]
 MatchStatus = Literal["matched", "partial", "missing"]
@@ -46,11 +46,6 @@ class Requirement(BaseModel):
     note: str = Field(description="One sentence explaining the status.")
 
 
-class Highlight(BaseModel):
-    experience: str = Field(description="Existing resume content worth emphasizing.")
-    why_relevant: str
-
-
 class Recommendation(BaseModel):
     section: Section
     priority: Priority
@@ -67,7 +62,6 @@ class RewrittenBullet(BaseModel):
 class Analysis(BaseModel):
     role_title: str
     requirements: list[Requirement]
-    highlights: list[Highlight]
     recommendations: list[Recommendation]
     rewritten_bullets: list[RewrittenBullet]
 
@@ -88,6 +82,5 @@ class AnalyzeResponse(BaseModel):
     role_title: str
     score: ScoreBreakdown
     requirements: list[Requirement]
-    highlights: list[Highlight]
     recommendations: list[Recommendation]
     rewritten_bullets: list[RewrittenBullet]

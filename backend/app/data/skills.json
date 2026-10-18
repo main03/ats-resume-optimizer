@@ -263,20 +263,6 @@
     "Customer Service": ["customer support"]
   },
 
-  "soft_skill": {
-    "Communication": ["communication skills", "written and verbal communication"],
-    "Leadership": [],
-    "Mentoring": ["mentor", "mentorship", "mentored", "~coaching"],
-    "Cross-functional Collaboration": ["cross-functional", "cross functional"],
-    "Collaboration": ["teamwork"],
-    "Problem Solving": ["problem-solving"],
-    "Critical Thinking": [],
-    "Attention to Detail": ["detail-oriented", "detail oriented"],
-    "Time Management": [],
-    "Presentation Skills": ["presenting"],
-    "Negotiation": []
-  },
-
   "qualification": {
     "=PMP": ["Project Management Professional"],
     "Certified ScrumMaster": ["=CSM", "Scrum Master certification", "~=PSM"],

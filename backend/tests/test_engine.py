@@ -46,7 +46,7 @@ def test_builtin_engine_end_to_end():
     assert reqs["Kubernetes"].status == "partial"            # synonym: k8s
     assert reqs["CI/CD"].status == "partial"                 # related term: CI
     assert reqs["Terraform"].importance == "preferred"
-    assert reqs["Terraform"].status == "partial"             # only in skills list
+    assert reqs["Terraform"].status == "matched"             # skills list counts, like an ATS
     assert reqs["Bachelor's degree"].status == "matched"
     assert reqs["3+ years of experience"].status == "matched"
 
