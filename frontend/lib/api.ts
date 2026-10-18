@@ -70,6 +70,30 @@ export async function analyzeResume(
   return res.json();
 }
 
+export const MAX_PDF_BYTES = 5 * 1024 * 1024; // keep in sync with backend/app/pdf.py
+
+export interface ExtractedText {
+  text: string;
+  pages: number;
+}
+
+export async function extractPdfText(file: File): Promise<ExtractedText> {
+  const isPdf = file.type === "application/pdf" || file.name.toLowerCase().endsWith(".pdf");
+  if (!isPdf) throw new Error("Please choose a PDF file.");
+  if (file.size > MAX_PDF_BYTES) throw new Error("The PDF is larger than 5 MB.");
+
+  const body = new FormData();
+  body.append("file", file);
+  let res: Response;
+  try {
+    res = await fetch(`${API_URL}/api/extract-text`, { method: "POST", body });
+  } catch {
+    throw new Error(`Could not reach the server at ${API_URL}. Is the backend running?`);
+  }
+  if (!res.ok) throw new Error(await errorMessage(res));
+  return res.json();
+}
+
 async function errorMessage(res: Response): Promise<string> {
   try {
     const body = await res.json();

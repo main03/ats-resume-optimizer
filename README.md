@@ -1,6 +1,6 @@
 # ATS Resume Optimizer
 
-Paste a resume and a job description. The app finds which job requirements the resume
+Paste or upload (PDF) a resume and a job description. The app finds which job requirements the resume
 already covers, which are underrepresented or missing, and suggests truthful
 improvements, including ATS-friendly wording for existing bullets.
 
@@ -16,7 +16,8 @@ frontend/  Next.js + React + TypeScript (single page)
   lib/api.ts              API types + fetch client
 
 backend/   FastAPI + Pydantic
-  app/main.py             POST /api/analyze, GET /api/health
+  app/main.py             POST /api/analyze, POST /api/extract-text, GET /api/health
+  app/pdf.py              PDF -> plain text (pypdf), with clear errors for bad files
   app/models.py           request/response + analysis schemas
   app/engine/             analysis engine
     job.py                job description -> requirements (sections, required/preferred)
@@ -32,6 +33,19 @@ backend/   FastAPI + Pydantic
 
 Flow: frontend → `POST /api/analyze` → the engine produces an analysis → `scoring.py`
 verifies it and computes the score → frontend renders the report.
+
+## PDF upload
+
+Both fields accept a PDF, via the **Upload PDF** button or drag-and-drop. The text is
+extracted on the server and placed in the text box so you can check and edit it before
+analyzing. Common PDF artifacts (ligatures like "ﬁ", symbol-font bullets) are cleaned up.
+
+| Problem | What the user sees |
+|---|---|
+| Scanned / image-only PDF | "No text found… probably a scanned image" (ATS can't read these either) |
+| Password-protected PDF | Asked to remove the password |
+| Not a PDF, or damaged | A clear error; the text box is left unchanged |
+| Over 5 MB, over 20 pages, or text over the field limit | Asked to use a smaller file or paste the relevant part |
 
 ## What the report shows
 

@@ -59,3 +59,10 @@ def test_experience_years_merges_overlaps():
     profile = parse_resume("EXPERIENCE\nA — Jan 2018 – Dec 2020\nB — Jan 2020 – Present\n")
     years, _ = experience_years(profile, today=date(2024, 1, 1))
     assert years == 6.0
+
+
+def test_requirement_lines_without_bullets_are_not_mistaken_for_headings():
+    # Bullet markers are often lost in PDF text.
+    job = "Requirements\n5+ years of professional software engineering experience\nPython and Docker\n"
+    terms = {r.term for r in engine.analyze(RESUME, job).requirements}
+    assert "5+ years of experience" in terms

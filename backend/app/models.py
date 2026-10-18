@@ -84,3 +84,8 @@ class AnalyzeResponse(BaseModel):
     requirements: list[Requirement]
     recommendations: list[Recommendation]
     rewritten_bullets: list[RewrittenBullet]
+
+
+class ExtractedText(BaseModel):
+    text: str
+    pages: int

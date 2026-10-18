@@ -45,8 +45,8 @@ export default function Home() {
           it truthfully, without keyword stuffing.
         </p>
         <ol className="how-it-works">
-          <li><span className="step" aria-hidden>1</span>Paste your resume as plain text</li>
-          <li><span className="step" aria-hidden>2</span>Paste the full job description</li>
+          <li><span className="step" aria-hidden>1</span>Paste or upload your resume (PDF)</li>
+          <li><span className="step" aria-hidden>2</span>Paste or upload the job description</li>
           <li><span className="step" aria-hidden>3</span>Get a score, the gaps, and what to change</li>
         </ol>
       </header>
@@ -56,7 +56,7 @@ export default function Home() {
           id="resume"
           label="Your resume"
           placeholder="Paste your resume as plain text…"
-          hint="Copy everything from your resume file, including headings like Experience and Skills. Formatting doesn't matter."
+          hint="Paste the text or upload a PDF. Include headings like Experience and Skills."
           value={resume}
           onChange={setResume}
           maxLength={MAX_RESUME_CHARS}
@@ -65,7 +65,7 @@ export default function Home() {
           id="job"
           label="Job description"
           placeholder="Paste the full job description…"
-          hint="Include the requirements and nice-to-have sections. Company and benefits text is ignored automatically."
+          hint="Paste the text or upload a PDF. Company and benefits text is ignored automatically."
           value={jobDescription}
           onChange={setJobDescription}
           maxLength={MAX_JOB_DESCRIPTION_CHARS}
@@ -93,7 +93,7 @@ export default function Home() {
       {result && !loading && <Report result={result} />}
 
       <p className="privacy muted small-text">
-        Your resume and the job description are analyzed on the server and never stored.
+        Your resume, the job description and any uploaded PDFs are processed on the server and never stored.
       </p>
     </main>
   );

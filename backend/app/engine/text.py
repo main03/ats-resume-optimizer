@@ -105,7 +105,24 @@ def _match_header(candidate: str, headers: dict[str, list[str]], strict: bool) -
             if all(w in vocab for w in words):
                 return section
         return None
+    if not _looks_like_heading(candidate):
+        return None
     for section, phrases in headers.items():
         if any(p in key for p in phrases):
             return section
     return None
+
+
+SMALL_WORDS = {"a", "an", "and", "or", "the", "to", "of", "for", "in", "on", "with", "you", "we", "our", "your", "you'll", "we're"}
+
+
+def _looks_like_heading(text: str) -> bool:
+    """Headings are short or Title/UPPER case. Sentences that merely contain a heading
+    word ("5+ years of software engineering experience") are content, which matters
+    when bullet markers were lost (e.g. text extracted from a PDF)."""
+    words = text.split()
+    if len(words) <= 3:
+        return True
+    if any(ch.isdigit() for ch in text):
+        return False
+    return all(w[0].isupper() or w.lower() in SMALL_WORDS for w in words if w[0].isalpha())
