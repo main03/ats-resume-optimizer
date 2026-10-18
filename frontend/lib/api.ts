@@ -40,6 +40,7 @@ export interface ScoreBreakdown {
 }
 
 export interface AnalyzeResponse {
+  engine: "builtin" | "claude";
   role_title: string;
   score: ScoreBreakdown;
   requirements: Requirement[];

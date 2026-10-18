@@ -23,7 +23,12 @@ export default function Report({ result }: { result: AnalyzeResponse }) {
           <span className="score-label">match</span>
         </div>
         <div>
-          <h2>{result.role_title}</h2>
+          <h2>
+            {result.role_title}{" "}
+            <span className="pill neutral">
+              {result.engine === "claude" ? "AI analysis" : "Built-in analysis"}
+            </span>
+          </h2>
           <p className="counts">
             <span className="pill matched">{score.matched} matched</span>
             <span className="pill partial">{score.partial} partial</span>
@@ -96,11 +101,16 @@ export default function Report({ result }: { result: AnalyzeResponse }) {
           {rewritten_bullets.length > 0 && <CopyButton text={allImproved} label="Copy all" />}
         </div>
         <p className="muted small-text">
-          Rewritten with the job&apos;s terminology, based only on what your resume already says.
-          Review each one before using it.
+          {result.engine === "claude"
+            ? "Rewritten with the job's terminology, based only on what your resume already says. Review each one before using it."
+            : "Your bullets with the job's exact wording swapped in where your resume uses a true synonym (e.g. k8s → Kubernetes). Nothing new is added."}
         </p>
         {rewritten_bullets.length === 0 ? (
-          <p className="muted">No bullet rewrites were suggested.</p>
+          <p className="muted">
+            {result.engine === "claude"
+              ? "No bullet rewrites were suggested."
+              : "No wording swaps needed: your bullets already use the posting's terms where they overlap."}
+          </p>
         ) : (
           <ul className="bullets">
             {rewritten_bullets.map((b, i) => (

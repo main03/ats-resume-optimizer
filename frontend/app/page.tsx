@@ -71,8 +71,8 @@ export default function Home() {
         </button>
         {loading && (
           <span className="muted loading">
-            <span className="spinner" aria-hidden /> Reading the job description and comparing it
-            with your resume. This usually takes 20–60 seconds.
+            <span className="spinner" aria-hidden /> Comparing your resume with the job
+            description…
           </span>
         )}
       </div>
