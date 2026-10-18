@@ -1,8 +1,8 @@
 """Deterministic post-processing: verify claims against the resume and compute the score.
 
-Whichever engine produced the analysis (built-in or Claude), this module makes sure every
-"matched" claim is backed by text that actually exists in the resume, and computes the
-score with a transparent formula.
+Makes sure every "matched" claim is backed by text that actually exists in the resume,
+drops rewrites of bullets that aren't in the resume, and computes the score with a
+transparent formula.
 """
 
 import re
@@ -26,7 +26,7 @@ def normalize(text: str) -> str:
     """Lowercase, unify quotes/dashes, drop formatting marks and collapse whitespace.
 
     Resumes pasted from Markdown (**bold**) or "fancy text" tools (𝐏𝐲𝐭𝐡𝐨𝐧) must still
-    match the plain-text quotes the LLM returns.
+    match plain-text keywords and quotes.
     """
     text = unicodedata.normalize("NFKC", text)  # 𝐏𝐲𝐭𝐡𝐨𝐧 -> Python
     text = text.translate(_PUNCT_MAP).lower()

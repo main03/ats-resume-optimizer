@@ -1,8 +1,7 @@
-"""Built-in, rule-based resume analyzer. Runs offline with no API key.
+"""Rule-based resume analyzer. Runs fully offline.
 
 Pipeline: parse the job description into terms (job.py) -> parse the resume into sections
-(resume.py) -> match each term (match.py) -> derive advice (advice.py). The output has the
-same shape as the Claude analyzer's, so scoring and the frontend work with either.
+(resume.py) -> match each term (match.py) -> derive advice (advice.py).
 """
 
 from ..models import Analysis

@@ -1,4 +1,4 @@
-"""Pydantic models for the API contract and for the LLM's structured output."""
+"""Pydantic models for the API contract and the analysis engine's output."""
 
 from typing import Literal
 
@@ -32,7 +32,7 @@ class AnalyzeRequest(BaseModel):
         return value.strip() if isinstance(value, str) else value
 
 
-# ---------- Analysis (built-in engine output / Claude structured output) ----------
+# ---------- Analysis (engine output) ----------
 
 
 class Requirement(BaseModel):
@@ -85,7 +85,6 @@ class ScoreBreakdown(BaseModel):
 
 
 class AnalyzeResponse(BaseModel):
-    engine: Literal["builtin", "claude"]
     role_title: str
     score: ScoreBreakdown
     requirements: list[Requirement]
