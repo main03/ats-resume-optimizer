@@ -6,6 +6,7 @@ and computes the score with a transparent formula instead of asking the LLM for 
 """
 
 import re
+import unicodedata
 
 from .models import LLMAnalysis, Requirement, RewrittenBullet, ScoreBreakdown
 
@@ -22,9 +23,15 @@ _PUNCT_MAP = str.maketrans({"’": "'", "‘": "'", "“": '"', "”": '"', "–
 
 
 def normalize(text: str) -> str:
-    """Lowercase, unify quotes/dashes, drop leading bullet markers and collapse whitespace."""
+    """Lowercase, unify quotes/dashes, drop formatting marks and collapse whitespace.
+
+    Resumes pasted from Markdown (**bold**) or "fancy text" tools (𝐏𝐲𝐭𝐡𝐨𝐧) must still
+    match the plain-text quotes the LLM returns.
+    """
+    text = unicodedata.normalize("NFKC", text)  # 𝐏𝐲𝐭𝐡𝐨𝐧 -> Python
     text = text.translate(_PUNCT_MAP).lower()
     text = re.sub(r"^\s*[-*•·▪◦]+\s*", "", text, flags=re.MULTILINE)
+    text = re.sub(r"[*_`]", "", text)  # Markdown emphasis / code marks
     return re.sub(r"\s+", " ", text).strip().rstrip(".")
 
 

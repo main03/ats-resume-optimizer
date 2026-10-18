@@ -18,6 +18,20 @@ def test_normalize_handles_bullets_quotes_and_whitespace():
     assert normalize("•  Led   migration of “legacy” services.") == 'led migration of "legacy" services'
 
 
+def test_markdown_bold_resume_still_verifies():
+    resume = "- Built **REST APIs** in __Python__ with `FastAPI`"
+    [r] = verify_requirements([req("Python", "matched", evidence="REST APIs in Python with FastAPI")], resume)
+    assert r.status == "matched"
+
+
+def test_unicode_bold_resume_still_verifies():
+    resume = "• Built REST APIs in 𝐏𝐲𝐭𝐡𝐨𝐧"
+    [r] = verify_requirements([req("Python", "matched", evidence="REST APIs in Python")], resume)
+    assert r.status == "matched"
+    bullets = [RewrittenBullet(original="Built REST APIs in Python", improved="x", keywords_used=[])]
+    assert len(verify_bullets(bullets, resume)) == 1
+
+
 def test_matched_with_verbatim_evidence_stays_matched():
     [r] = verify_requirements([req("FastAPI", "matched", evidence="Python with FastAPI")], RESUME)
     assert r.status == "matched"
