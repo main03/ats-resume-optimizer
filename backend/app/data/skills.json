@@ -1,14 +1,25 @@
 {
   "_format": "category -> { canonical name: [aliases] }. Prefix '=' to match case-sensitively (for words that are also common English, like Go or Excel). Prefix '~' for a related term that is NOT a true synonym (CI vs CI/CD): it earns partial credit but is never swapped into a rewrite. Use '~=' for both.",
-
   "technical_skill": {
-    "Python": ["python3"],
+    "Python": [
+      "python3"
+    ],
     "Java": [],
-    "JavaScript": ["=JS", "ECMAScript", "ES6"],
+    "JavaScript": [
+      "=JS",
+      "ECMAScript",
+      "ES6"
+    ],
     "TypeScript": [],
-    "C++": ["cpp"],
-    "C#": ["csharp"],
-    "=Go": ["Golang"],
+    "C++": [
+      "cpp"
+    ],
+    "C#": [
+      "csharp"
+    ],
+    "=Go": [
+      "Golang"
+    ],
     "Rust": [],
     "Kotlin": [],
     "Swift": [],
@@ -24,122 +35,380 @@
     "Dart": [],
     "SQL": [],
     "NoSQL": [],
-    "HTML": ["HTML5"],
-    "CSS": ["CSS3"],
-    "Sass": ["SCSS"],
-    "Bash": ["shell scripting", "shell script", "shell scripts"],
+    "HTML": [
+      "HTML5"
+    ],
+    "CSS": [
+      "CSS3"
+    ],
+    "Sass": [
+      "SCSS"
+    ],
+    "Bash": [
+      "shell scripting",
+      "shell script",
+      "shell scripts"
+    ],
     "PowerShell": [],
-    "React": ["React.js", "ReactJS"],
+    "React": [
+      "React.js",
+      "ReactJS"
+    ],
     "React Native": [],
     "Redux": [],
-    "Next.js": ["NextJS"],
-    "Vue.js": ["Vue", "VueJS"],
-    "Angular": ["AngularJS"],
+    "Next.js": [
+      "NextJS"
+    ],
+    "Vue.js": [
+      "Vue",
+      "VueJS"
+    ],
+    "Angular": [
+      "AngularJS"
+    ],
     "Svelte": [],
-    "Node.js": ["NodeJS", "=Node"],
-    "Express.js": ["=Express", "ExpressJS"],
+    "Node.js": [
+      "NodeJS",
+      "=Node"
+    ],
+    "Express.js": [
+      "=Express",
+      "ExpressJS"
+    ],
     "NestJS": [],
     "Django": [],
     "Flask": [],
     "FastAPI": [],
-    "Spring Boot": ["~=Spring"],
-    ".NET": ["dotnet", "ASP.NET", ".NET Core"],
-    "Ruby on Rails": ["=Rails"],
+    "Spring Boot": [
+      "~=Spring"
+    ],
+    ".NET": [
+      "dotnet",
+      "ASP.NET",
+      ".NET Core"
+    ],
+    "Ruby on Rails": [
+      "=Rails"
+    ],
     "Laravel": [],
     "Flutter": [],
     "iOS": [],
     "Android": [],
     "SwiftUI": [],
     "Jetpack Compose": [],
-    "Tailwind CSS": ["Tailwind"],
+    "Tailwind CSS": [
+      "Tailwind"
+    ],
     "GraphQL": [],
-    "REST APIs": ["=REST", "RESTful", "REST API", "RESTful APIs"],
+    "REST APIs": [
+      "=REST",
+      "RESTful",
+      "REST API",
+      "RESTful APIs"
+    ],
     "gRPC": [],
-    "Microservices": ["microservice", "microservices architecture"],
-    "Distributed Systems": ["distributed system"],
+    "Microservices": [
+      "microservice",
+      "microservices architecture"
+    ],
+    "Distributed Systems": [
+      "distributed system"
+    ],
     "System Design": [],
-    "Event-Driven Architecture": ["event-driven"],
-    "Object-Oriented Programming": ["=OOP", "object oriented programming", "object-oriented design"],
+    "Event-Driven Architecture": [
+      "event-driven"
+    ],
+    "Object-Oriented Programming": [
+      "=OOP",
+      "object oriented programming",
+      "object-oriented design"
+    ],
     "Design Patterns": [],
     "Data Structures": [],
     "Algorithms": [],
-    "Test-Driven Development": ["=TDD", "test driven development"],
-    "Unit Testing": ["unit tests"],
-    "Integration Testing": ["integration tests"],
-    "Automated Testing": ["test automation"],
-    "CI/CD": ["~=CI", "~continuous integration", "~continuous delivery", "~continuous deployment"],
-    "Infrastructure as Code": ["=IaC"],
+    "Test-Driven Development": [
+      "=TDD",
+      "test driven development"
+    ],
+    "Unit Testing": [
+      "unit tests"
+    ],
+    "Integration Testing": [
+      "integration tests"
+    ],
+    "Automated Testing": [
+      "test automation",
+      "automation testing",
+      "automated tests"
+    ],
+    "CI/CD": [
+      "~=CI",
+      "~continuous integration",
+      "~continuous delivery",
+      "~continuous deployment"
+    ],
+    "Infrastructure as Code": [
+      "=IaC"
+    ],
     "DevOps": [],
-    "Site Reliability Engineering": ["=SRE"],
-    "Networking": ["~TCP/IP"],
-    "Cybersecurity": ["information security", "InfoSec"],
-    "Penetration Testing": ["pen testing", "pentesting"],
-    "Identity and Access Management": ["=IAM"],
-    "OAuth": ["OAuth2", "OAuth 2.0"],
-    "Single Sign-On": ["=SSO"],
+    "Site Reliability Engineering": [
+      "=SRE"
+    ],
+    "Networking": [
+      "~TCP/IP"
+    ],
+    "Cybersecurity": [
+      "information security",
+      "InfoSec"
+    ],
+    "Penetration Testing": [
+      "pen testing",
+      "pentesting"
+    ],
+    "Identity and Access Management": [
+      "=IAM"
+    ],
+    "OAuth": [
+      "OAuth2",
+      "OAuth 2.0"
+    ],
+    "Single Sign-On": [
+      "=SSO"
+    ],
     "Encryption": [],
     "OWASP": [],
-    "Machine Learning": ["=ML"],
+    "Machine Learning": [
+      "=ML"
+    ],
     "Deep Learning": [],
-    "Artificial Intelligence": ["=AI"],
-    "Natural Language Processing": ["=NLP"],
+    "Artificial Intelligence": [
+      "=AI"
+    ],
+    "Natural Language Processing": [
+      "=NLP"
+    ],
     "Computer Vision": [],
-    "Large Language Models": ["=LLM", "=LLMs"],
-    "Generative AI": ["GenAI"],
+    "Large Language Models": [
+      "=LLM",
+      "=LLMs"
+    ],
+    "Generative AI": [
+      "GenAI"
+    ],
     "Prompt Engineering": [],
-    "Retrieval-Augmented Generation": ["=RAG"],
+    "Retrieval-Augmented Generation": [
+      "=RAG"
+    ],
     "MLOps": [],
-    "Data Analysis": ["data analytics", "analyzing data"],
+    "Data Analysis": [
+      "data analytics",
+      "analyzing data"
+    ],
     "Data Engineering": [],
     "Data Science": [],
-    "Data Modeling": ["data modelling"],
-    "Data Visualization": ["data visualisation"],
-    "Data Pipelines": ["data pipeline"],
-    "ETL": ["~ELT"],
-    "Data Warehousing": ["data warehouse"],
-    "Statistics": ["statistical analysis", "statistical modeling"],
-    "A/B Testing": ["A/B tests", "split testing", "~experimentation"],
+    "Data Modeling": [
+      "data modelling"
+    ],
+    "Data Visualization": [
+      "data visualisation"
+    ],
+    "Data Pipelines": [
+      "data pipeline"
+    ],
+    "ETL": [
+      "~ELT"
+    ],
+    "Data Warehousing": [
+      "data warehouse"
+    ],
+    "Statistics": [
+      "statistical analysis",
+      "statistical modeling"
+    ],
+    "A/B Testing": [
+      "A/B tests",
+      "split testing",
+      "~experimentation"
+    ],
     "Pandas": [],
     "NumPy": [],
-    "scikit-learn": ["sklearn"],
+    "scikit-learn": [
+      "sklearn"
+    ],
     "TensorFlow": [],
     "PyTorch": [],
     "Keras": [],
-    "Hugging Face": ["HuggingFace"],
-    "Apache Spark": ["=Spark", "PySpark"],
+    "Hugging Face": [
+      "HuggingFace"
+    ],
+    "Apache Spark": [
+      "=Spark",
+      "PySpark"
+    ],
     "Hadoop": [],
-    "Apache Kafka": ["Kafka"],
-    "Apache Airflow": ["Airflow"],
-    "dbt": ["=dbt"],
-    "Responsive Design": ["responsive web design"],
-    "Web Accessibility": ["accessibility", "=WCAG", "a11y"],
-    "SEO": ["search engine optimization"],
-    "SEM": ["search engine marketing"],
-    "UX Design": ["=UX", "user experience"],
-    "UI Design": ["=UI", "user interface design"],
-    "User Research": ["UX research"],
-    "Wireframing": ["wireframes"],
+    "Apache Kafka": [
+      "Kafka"
+    ],
+    "Apache Airflow": [
+      "Airflow"
+    ],
+    "dbt": [
+      "=dbt"
+    ],
+    "Responsive Design": [
+      "responsive web design"
+    ],
+    "Web Accessibility": [
+      "accessibility",
+      "=WCAG",
+      "a11y"
+    ],
+    "SEO": [
+      "search engine optimization"
+    ],
+    "SEM": [
+      "search engine marketing"
+    ],
+    "UX Design": [
+      "=UX",
+      "user experience"
+    ],
+    "UI Design": [
+      "=UI",
+      "user interface design"
+    ],
+    "User Research": [
+      "UX research"
+    ],
+    "Wireframing": [
+      "wireframes"
+    ],
     "Prototyping": [],
     "Usability Testing": [],
-    "Financial Modeling": ["financial modelling", "financial models"],
+    "Financial Modeling": [
+      "financial modelling",
+      "financial models"
+    ],
     "Financial Analysis": [],
     "Accounting": [],
-    "Auditing": ["audit"],
-    "Budgeting": ["budget management"],
+    "Auditing": [
+      "audit"
+    ],
+    "Budgeting": [
+      "budget management"
+    ],
     "Forecasting": [],
     "Technical Writing": [],
-    "Code Review": ["code reviews"]
+    "Code Review": [
+      "code reviews"
+    ],
+    "Asynchronous Programming": [
+      "async programming",
+      "async/await",
+      "~asynchronous"
+    ],
+    "Authentication": [
+      "user authentication",
+      "=JWT",
+      "~OAuth"
+    ],
+    "Authorization": [
+      "access control",
+      "=RBAC",
+      "role-based access control"
+    ],
+    "Database Design": [
+      "database schemas",
+      "schema design",
+      "database schema",
+      "~schemas"
+    ],
+    "Scalability": [
+      "scalable",
+      "scaling",
+      "scalable systems"
+    ],
+    "Performance Optimization": [
+      "performance tuning",
+      "query optimization",
+      "~optimized",
+      "~performance"
+    ],
+    "High Availability": [
+      "highly available",
+      "~fault tolerance",
+      "~fault-tolerant"
+    ],
+    "Low Latency": [
+      "low-latency",
+      "~latency"
+    ],
+    "Security": [
+      "application security",
+      "secure coding",
+      "~secure"
+    ],
+    "Data Protection": [
+      "data privacy",
+      "~privacy"
+    ],
+    "Refactoring": [
+      "refactor",
+      "refactored",
+      "code refactoring"
+    ],
+    "Backend Development": [
+      "server-side",
+      "back-end",
+      "backend",
+      "server side"
+    ],
+    "Frontend Development": [
+      "front-end",
+      "frontend",
+      "client-side"
+    ],
+    "Federated Identity": [
+      "Federated ID",
+      "identity federation"
+    ],
+    "API Integration": [
+      "third-party API",
+      "third-party APIs",
+      "API integrations",
+      "~platform APIs"
+    ],
+    "Web Applications": [
+      "web application",
+      "web apps"
+    ]
   },
-
   "tool": {
-    "AWS": ["Amazon Web Services"],
-    "Microsoft Azure": ["Azure"],
-    "Google Cloud": ["=GCP", "Google Cloud Platform"],
-    "AWS Lambda": ["=Lambda"],
-    "Amazon S3": ["=S3"],
-    "Amazon EC2": ["=EC2"],
-    "Docker": ["~containerization"],
-    "Kubernetes": ["k8s"],
+    "AWS": [
+      "Amazon Web Services"
+    ],
+    "Microsoft Azure": [
+      "Azure"
+    ],
+    "Google Cloud": [
+      "=GCP",
+      "Google Cloud Platform"
+    ],
+    "AWS Lambda": [
+      "=Lambda"
+    ],
+    "Amazon S3": [
+      "=S3"
+    ],
+    "Amazon EC2": [
+      "=EC2"
+    ],
+    "Docker": [
+      "~containerization"
+    ],
+    "Kubernetes": [
+      "k8s"
+    ],
     "Terraform": [],
     "Ansible": [],
     "=Chef": [],
@@ -153,28 +422,52 @@
     "GitHub": [],
     "GitLab": [],
     "Bitbucket": [],
-    "Linux": ["~Unix"],
+    "Linux": [
+      "~Unix"
+    ],
     "Nginx": [],
-    "PostgreSQL": ["Postgres"],
+    "PostgreSQL": [
+      "Postgres"
+    ],
     "MySQL": [],
-    "MongoDB": ["Mongo"],
+    "MongoDB": [
+      "Mongo"
+    ],
     "Redis": [],
-    "Elasticsearch": ["Elastic Search", "~OpenSearch"],
+    "Elasticsearch": [
+      "Elastic Search",
+      "~OpenSearch"
+    ],
     "DynamoDB": [],
-    "SQL Server": ["MSSQL", "Microsoft SQL Server"],
-    "=Oracle": ["Oracle Database"],
+    "SQL Server": [
+      "MSSQL",
+      "Microsoft SQL Server"
+    ],
+    "=Oracle": [
+      "Oracle Database"
+    ],
     "Cassandra": [],
     "SQLite": [],
     "Snowflake": [],
     "Databricks": [],
     "BigQuery": [],
-    "Amazon Redshift": ["Redshift"],
+    "Amazon Redshift": [
+      "Redshift"
+    ],
     "Tableau": [],
-    "Power BI": ["PowerBI"],
+    "Power BI": [
+      "PowerBI"
+    ],
     "Looker": [],
-    "=Excel": ["Microsoft Excel", "MS Excel"],
+    "=Excel": [
+      "Microsoft Excel",
+      "MS Excel"
+    ],
     "Google Sheets": [],
-    "Jupyter": ["Jupyter Notebook", "Jupyter Notebooks"],
+    "Jupyter": [
+      "Jupyter Notebook",
+      "Jupyter Notebooks"
+    ],
     "Prometheus": [],
     "Grafana": [],
     "Datadog": [],
@@ -199,45 +492,83 @@
     "Figma": [],
     "Sketch": [],
     "Adobe XD": [],
-    "Adobe Photoshop": ["Photoshop"],
-    "Adobe Illustrator": ["Illustrator"],
-    "Adobe InDesign": ["InDesign"],
-    "Adobe Creative Suite": ["Adobe Creative Cloud"],
+    "Adobe Photoshop": [
+      "Photoshop"
+    ],
+    "Adobe Illustrator": [
+      "Illustrator"
+    ],
+    "Adobe InDesign": [
+      "InDesign"
+    ],
+    "Adobe Creative Suite": [
+      "Adobe Creative Cloud"
+    ],
     "Salesforce": [],
     "HubSpot": [],
     "Marketo": [],
-    "Google Analytics": ["=GA4"],
-    "Google Ads": ["AdWords"],
+    "Google Analytics": [
+      "=GA4"
+    ],
+    "Google Ads": [
+      "AdWords"
+    ],
     "=SAP": [],
     "NetSuite": [],
     "QuickBooks": [],
     "Workday": [],
     "Zendesk": [],
-    "Microsoft Office": ["MS Office", "Microsoft 365", "Office 365"],
+    "Microsoft Office": [
+      "MS Office",
+      "Microsoft 365",
+      "Office 365"
+    ],
     "PowerPoint": [],
-    "=CRM": ["customer relationship management"]
+    "=CRM": [
+      "customer relationship management"
+    ]
   },
-
   "domain": {
-    "Agile": ["agile methodologies", "agile methodology"],
+    "Agile": [
+      "agile methodologies",
+      "agile methodology"
+    ],
     "Scrum": [],
     "Kanban": [],
     "Project Management": [],
     "Product Management": [],
-    "Product Roadmap": ["roadmapping", "product roadmaps"],
-    "Requirements Gathering": ["requirements analysis"],
-    "Stakeholder Management": ["stakeholder communication"],
+    "Product Roadmap": [
+      "roadmapping",
+      "product roadmaps"
+    ],
+    "Requirements Gathering": [
+      "requirements analysis"
+    ],
+    "Stakeholder Management": [
+      "stakeholder communication"
+    ],
     "Risk Management": [],
-    "Compliance": ["regulatory compliance"],
+    "Compliance": [
+      "regulatory compliance"
+    ],
     "=GDPR": [],
     "=HIPAA": [],
-    "PCI DSS": ["PCI-DSS", "PCI compliance"],
-    "SOC 2": ["SOC2"],
+    "PCI DSS": [
+      "PCI-DSS",
+      "PCI compliance"
+    ],
+    "SOC 2": [
+      "SOC2"
+    ],
     "ISO 27001": [],
-    "=SOX": ["Sarbanes-Oxley"],
+    "=SOX": [
+      "Sarbanes-Oxley"
+    ],
     "=GAAP": [],
     "=IFRS": [],
-    "Supply Chain": ["supply chain management"],
+    "Supply Chain": [
+      "supply chain management"
+    ],
     "Logistics": [],
     "Inventory Management": [],
     "Procurement": [],
@@ -247,39 +578,83 @@
     "Lead Generation": [],
     "=B2B": [],
     "=B2C": [],
-    "=SaaS": ["software as a service"],
-    "E-commerce": ["ecommerce", "e-commerce"],
+    "=SaaS": [
+      "software as a service"
+    ],
+    "E-commerce": [
+      "ecommerce",
+      "e-commerce"
+    ],
     "Fintech": [],
-    "Payments": ["payment processing"],
+    "Payments": [
+      "payment processing"
+    ],
     "Digital Marketing": [],
     "Content Marketing": [],
     "Email Marketing": [],
-    "Social Media Marketing": ["social media"],
+    "Social Media Marketing": [
+      "social media"
+    ],
     "Copywriting": [],
-    "Brand Strategy": ["~branding"],
+    "Brand Strategy": [
+      "~branding"
+    ],
     "Market Research": [],
-    "=KPIs": ["=KPI", "key performance indicators"],
-    "=OKRs": ["=OKR"],
-    "Customer Service": ["customer support"]
+    "=KPIs": [
+      "=KPI",
+      "key performance indicators"
+    ],
+    "=OKRs": [
+      "=OKR"
+    ],
+    "Customer Service": [
+      "customer support"
+    ]
   },
-
   "qualification": {
-    "=PMP": ["Project Management Professional"],
-    "Certified ScrumMaster": ["=CSM", "Scrum Master certification", "~=PSM"],
-    "AWS Certified": ["AWS Certification", "AWS Solutions Architect"],
-    "Azure Certification": ["Azure Certified", "AZ-900", "AZ-104"],
-    "=CKA": ["Certified Kubernetes Administrator"],
+    "=PMP": [
+      "Project Management Professional"
+    ],
+    "Certified ScrumMaster": [
+      "=CSM",
+      "Scrum Master certification",
+      "~=PSM"
+    ],
+    "AWS Certified": [
+      "AWS Certification",
+      "AWS Solutions Architect"
+    ],
+    "Azure Certification": [
+      "Azure Certified",
+      "AZ-900",
+      "AZ-104"
+    ],
+    "=CKA": [
+      "Certified Kubernetes Administrator"
+    ],
     "=CKAD": [],
     "=CISSP": [],
     "=CISM": [],
-    "=CEH": ["Certified Ethical Hacker"],
-    "CompTIA Security+": ["Security+"],
+    "=CEH": [
+      "Certified Ethical Hacker"
+    ],
+    "CompTIA Security+": [
+      "Security+"
+    ],
     "=CCNA": [],
-    "=CPA": ["Certified Public Accountant"],
-    "=CFA": ["Chartered Financial Analyst"],
+    "=CPA": [
+      "Certified Public Accountant"
+    ],
+    "=CFA": [
+      "Chartered Financial Analyst"
+    ],
     "=ACCA": [],
-    "Six Sigma": ["Lean Six Sigma"],
+    "Six Sigma": [
+      "Lean Six Sigma"
+    ],
     "=ITIL": [],
-    "SHRM-CP": ["~=SHRM"]
+    "SHRM-CP": [
+      "~=SHRM"
+    ]
   }
 }

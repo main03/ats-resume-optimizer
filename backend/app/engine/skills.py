@@ -50,7 +50,11 @@ def compile_term(term: str, exact: bool) -> re.Pattern:
     """Exact terms are case-sensitive with strict boundaries; others are case-insensitive."""
     if exact:
         return re.compile(_STRICT_BEFORE + re.escape(term) + _STRICT_AFTER)
-    escaped = re.escape(term).replace(r"\ ", r"[\s-]+")
+    words = term.split(" ")
+    last = words[-1]
+    # In phrases, let the last word inflect: "automated testing" also matches "automated tests".
+    tail = re.escape(stem(last)) + r"\w*" if len(words) > 1 and last.isalpha() and len(last) >= 4 else re.escape(last)
+    escaped = r"[\s-]+".join([*map(re.escape, words[:-1]), tail])
     return re.compile(_BOUNDARY_BEFORE + escaped + _BOUNDARY_AFTER, re.IGNORECASE)
 
 
@@ -104,9 +108,11 @@ def find_skills(text: str) -> list[Hit]:
 
 
 def same_wording(a: str, b: str) -> bool:
-    """True for trivial variants: "React"/"React.js", "API"/"APIs", "mentor"/"mentoring",
-    "REST"/"REST APIs". Different names ("k8s"/"Kubernetes") are not the same wording."""
+    """True for trivial variants: "React"/"React.js", "API"/"APIs", "CSS"/"CSS3",
+    "automated tests"/"automated testing", "REST"/"REST APIs".
+    Different names ("k8s"/"Kubernetes") are not the same wording."""
     def words(s: str) -> set[str]:
-        return {stem(w) for w in re.findall(r"[a-z0-9+#]+", s.lower())}
+        tokens = re.findall(r"[a-z0-9+#]+", s.lower().replace("-", ""))  # front-end = frontend
+        return {stem(re.sub(r"(?<=[a-z])\d+$", "", w)) for w in tokens}  # drop versions: css3 -> css
     wa, wb = words(a), words(b)
     return bool(wa and wb) and (wa <= wb or wb <= wa)

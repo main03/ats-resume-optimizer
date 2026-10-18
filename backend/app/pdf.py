@@ -58,5 +58,6 @@ def clean(text: str) -> str:
     text = text.translate(_REPLACEMENTS)
     text = re.sub(r"[ \t]+", " ", text)            # collapse runs of spaces
     text = re.sub(r" *\n *", "\n", text)           # trim around line breaks
+    text = re.sub(r"^[•·▪◦‣●\-*]+$\n?", "", text, flags=re.MULTILINE)  # stray bullet glyphs
     text = re.sub(r"\n{3,}", "\n\n", text)         # at most one blank line
     return text.strip()

@@ -66,3 +66,25 @@ def test_requirement_lines_without_bullets_are_not_mistaken_for_headings():
     job = "Requirements\n5+ years of professional software engineering experience\nPython and Docker\n"
     terms = {r.term for r in engine.analyze(RESUME, job).requirements}
     assert "5+ years of experience" in terms
+
+
+def test_inflections_versions_and_hyphens_count_as_same_wording():
+    job = (
+        "Backend Engineer at Acme\n\nRequirements\n"
+        "- Implementing automated testing platforms\n- HTML5 and CSS3\n- Front-end basics\n"
+    )
+    resume = "EXPERIENCE\n- Added 1,300+ automated tests\n- Built frontend pages with HTML and CSS\n"
+    analysis = engine.analyze(resume, job)
+    assert analysis.role_title == "Backend Engineer at Acme"
+    statuses = {r.term: r.status for r in analysis.requirements}
+    assert statuses["automated testing"] == "matched"
+    assert statuses["HTML5"] == "matched"
+    assert statuses["CSS3"] == "matched"
+    assert statuses["Front-end"] == "matched"
+
+
+def test_responsibilities_count_as_preferred():
+    job = "What You'll Do\n- Refactor the codebase\n\nRequirements\n- Python\n"
+    reqs = {r.term: r.importance for r in engine.analyze(RESUME, job).requirements}
+    assert reqs["Refactor"] == "preferred"
+    assert reqs["Python"] == "required"

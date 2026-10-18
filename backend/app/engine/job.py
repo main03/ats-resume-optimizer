@@ -67,7 +67,7 @@ ACRONYM_STOPLIST = {
     "PHD", "MSC", "BSC", "ADA", "401K", "OTE", "QA", "ETC",
 }
 
-MAX_SKILLS = 25
+MAX_SKILLS = 40
 MAX_ACRONYMS = 6
 
 
@@ -99,7 +99,8 @@ def _importance(line: Line) -> str:
         return "preferred"
     if REQUIRED_CUES.search(line.text):
         return "required"
-    return "preferred" if line.section == "preferred" else "required"
+    # Responsibilities describe the job, not what candidates are screened on.
+    return "preferred" if line.section in ("preferred", "responsibility") else "required"
 
 
 def parse_job(job_description: str) -> JobProfile:
@@ -124,6 +125,8 @@ def _skill_terms(lines: list[Line]) -> list[JobTerm]:
     for i, line in enumerate(lines):
         importance = _importance(line)
         for hit in find_skills(line.text):
+            if hit.skill.is_related(hit.surface):  # a vague related word isn't a requirement
+                continue
             term = by_name.get(hit.skill.name)
             if term is None:
                 by_name[hit.skill.name] = JobTerm(
@@ -204,6 +207,12 @@ def _degree_terms(lines: list[Line]) -> list[JobTerm]:
     return []
 
 
+ROLE_WORDS = re.compile(
+    r"\b(engineer|developer|programmer|architect|manager|designer|analyst|scientist|lead|"
+    r"intern|specialist|consultant|administrator|director|officer|associate|coordinator|"
+    r"executive|representative|technician|head of)\b",
+    re.IGNORECASE,
+)
 TITLE_LABEL = re.compile(r"^(?:job\s+title|position|role|title)\s*:\s*(.+)$", re.IGNORECASE)
 HIRING = re.compile(
     r"(?:looking for|hiring|seeking)\s+(?:an?\s+)?((?:[A-Z][\w+#/.-]*\s?){1,6})"
@@ -215,6 +224,9 @@ def _role_title(job_description: str) -> str:
     for line in raw_lines[:10]:
         if m := TITLE_LABEL.match(line):
             return m.group(1).strip()
+    for line in raw_lines[:6]:  # the first short line naming a role, e.g. after the company name
+        if len(line.split()) <= 8 and ROLE_WORDS.search(line) and not line.endswith((".", ":")):
+            return line
     if raw_lines:
         first = raw_lines[0]
         if len(first.split()) <= 8 and not first.endswith((".", ":")) and not re.match(
