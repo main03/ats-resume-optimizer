@@ -9,7 +9,7 @@ MAX_RESUME_CHARS = 30_000
 MAX_JOB_DESCRIPTION_CHARS = 20_000
 
 Category = Literal[
-    "technical_skill", "tool", "qualification", "domain"
+    "technical_skill", "tool", "qualification", "domain", "concept"
 ]
 Importance = Literal["required", "preferred"]
 MatchStatus = Literal["matched", "partial", "missing"]

@@ -60,6 +60,9 @@ def verify_bullets(bullets: list[RewrittenBullet], resume: str) -> list[Rewritte
 
 
 def compute_score(requirements: list[Requirement]) -> ScoreBreakdown:
+    # General practice words ("refactoring", "scalability") are shown but not scored:
+    # ATS searches target named skills, tools and qualifications.
+    requirements = [r for r in requirements if r.category != "concept"]
     counts = {"matched": 0, "partial": 0, "missing": 0}
     earned = possible = 0.0
     for req in requirements:

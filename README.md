@@ -56,6 +56,10 @@ analyzing. Common PDF artifacts (ligatures like "ﬁ", symbol-font bullets) are 
    - **Written differently:** you used a synonym (k8s vs Kubernetes) or a related term
      (CI vs CI/CD). A literal-match ATS may miss these.
    - **Missing:** not in your resume.
+
+   General practice words (refactoring, scalability, high availability, security,
+   compliance) are listed as "Also mentioned in the job (not scored)". Recruiters search
+   ATS for named skills, tools, certifications and standards, not for these.
 3. **What to do:** a short, prioritized list of ATS-relevant fixes, plus copy-ready
    bullet fixes.
 
@@ -99,6 +103,7 @@ finds in the posting. To support a new skill, add it under a category:
 - A plain alias is a true synonym and may be swapped into rewrites.
 - `=` means case-sensitive, for words that are also common English (Go, Excel, Spring).
 - `~` means a related term, not a synonym: it earns partial credit but is never swapped.
+- The `concept` category holds general practice words: shown in the report, never scored.
 
 ## How the match score works
 

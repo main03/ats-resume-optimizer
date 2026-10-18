@@ -1,5 +1,5 @@
 {
-  "_format": "category -> { canonical name: [aliases] }. Prefix '=' to match case-sensitively (for words that are also common English, like Go or Excel). Prefix '~' for a related term that is NOT a true synonym (CI vs CI/CD): it earns partial credit but is never swapped into a rewrite. Use '~=' for both.",
+  "_format": "category -> { canonical name: [aliases] }. Prefix '=' to match case-sensitively (for words that are also common English, like Go or Excel). Prefix '~' for a related term that is NOT a true synonym (CI vs CI/CD): it earns partial credit but is never swapped into a rewrite. Use '~=' for both. Category 'concept' holds general practice words (refactoring, scalability): shown in the report but not scored, since ATS searches target named skills and tools.",
   "technical_skill": {
     "Python": [
       "python3"
@@ -299,9 +299,6 @@
     ],
     "Forecasting": [],
     "Technical Writing": [],
-    "Code Review": [
-      "code reviews"
-    ],
     "Asynchronous Programming": [
       "async programming",
       "async/await",
@@ -323,64 +320,9 @@
       "database schema",
       "~schemas"
     ],
-    "Scalability": [
-      "scalable",
-      "scaling",
-      "scalable systems"
-    ],
-    "Performance Optimization": [
-      "performance tuning",
-      "query optimization",
-      "~optimized",
-      "~performance"
-    ],
-    "High Availability": [
-      "highly available",
-      "~fault tolerance",
-      "~fault-tolerant"
-    ],
-    "Low Latency": [
-      "low-latency",
-      "~latency"
-    ],
-    "Security": [
-      "application security",
-      "secure coding",
-      "~secure"
-    ],
-    "Data Protection": [
-      "data privacy",
-      "~privacy"
-    ],
-    "Refactoring": [
-      "refactor",
-      "refactored",
-      "code refactoring"
-    ],
-    "Backend Development": [
-      "server-side",
-      "back-end",
-      "backend",
-      "server side"
-    ],
-    "Frontend Development": [
-      "front-end",
-      "frontend",
-      "client-side"
-    ],
     "Federated Identity": [
       "Federated ID",
       "identity federation"
-    ],
-    "API Integration": [
-      "third-party API",
-      "third-party APIs",
-      "API integrations",
-      "~platform APIs"
-    ],
-    "Web Applications": [
-      "web application",
-      "web apps"
     ]
   },
   "tool": {
@@ -548,9 +490,6 @@
       "stakeholder communication"
     ],
     "Risk Management": [],
-    "Compliance": [
-      "regulatory compliance"
-    ],
     "=GDPR": [],
     "=HIPAA": [],
     "PCI DSS": [
@@ -655,6 +594,69 @@
     "=ITIL": [],
     "SHRM-CP": [
       "~=SHRM"
+    ]
+  },
+  "concept": {
+    "Scalability": [
+      "scalable",
+      "scaling",
+      "scalable systems"
+    ],
+    "Performance Optimization": [
+      "performance tuning",
+      "query optimization",
+      "~optimized",
+      "~performance"
+    ],
+    "High Availability": [
+      "highly available",
+      "~fault tolerance",
+      "~fault-tolerant"
+    ],
+    "Low Latency": [
+      "low-latency",
+      "~latency"
+    ],
+    "Security": [
+      "application security",
+      "secure coding",
+      "~secure"
+    ],
+    "Data Protection": [
+      "data privacy",
+      "~privacy"
+    ],
+    "Refactoring": [
+      "refactor",
+      "refactored",
+      "code refactoring"
+    ],
+    "Backend Development": [
+      "server-side",
+      "back-end",
+      "backend",
+      "server side"
+    ],
+    "Frontend Development": [
+      "front-end",
+      "frontend",
+      "client-side"
+    ],
+    "Web Applications": [
+      "web application",
+      "web apps"
+    ],
+    "Code Review": [
+      "code reviews"
+    ],
+    "API Integration": [
+      "third-party API",
+      "third-party APIs",
+      "API integrations",
+      "~platform APIs"
+    ],
+    "Compliance": [
+      "regulatory compliance"
     ]
   }
 }

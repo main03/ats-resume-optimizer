@@ -65,3 +65,9 @@ def test_bullets_with_invented_originals_are_dropped():
         RewrittenBullet(original="Won the Turing Award", improved="y", keywords_used=[]),
     ]
     assert [b.improved for b in verify_bullets(bullets, RESUME)] == ["x"]
+
+
+def test_concepts_are_not_scored():
+    concept = Requirement(term="Refactor", category="concept", importance="required",
+                          status="missing", resume_evidence="", note="")
+    assert compute_score([req("A", "matched"), concept]).score == 100

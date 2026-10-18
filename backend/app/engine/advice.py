@@ -21,11 +21,12 @@ def recommendations(matches: list[Match], resume: ResumeProfile, resume_text: st
     def keywords(status: str, importance: str) -> list[str]:
         return [
             m.requirement.term for m in matches
-            if m.term.kind in ("skill", "acronym")
+            if m.term.kind in ("skill", "acronym") and m.term.category != "concept"
             and m.requirement.status == status and m.requirement.importance == importance
         ]
 
-    wording = [m for m in matches if m.reason == "wording"]
+    scored = [m for m in matches if m.term.category != "concept"]
+    wording = [m for m in scored if m.reason == "wording"]
     if wording:
         recs.append(Recommendation(
             section="skills", priority="high",
@@ -51,7 +52,7 @@ def recommendations(matches: list[Match], resume: ResumeProfile, resume_text: st
                 rationale="Some ATS filter on experience and education, so make them easy to find.",
             ))
 
-    related = [m for m in matches if m.reason == "related"]
+    related = [m for m in scored if m.reason == "related"]
     if related:
         recs.append(Recommendation(
             section="experience", priority="medium",

@@ -3,7 +3,10 @@ import CopyButton from "./CopyButton";
 
 // Three parts: the score, every keyword with its status, and a short to-do list.
 export default function Report({ result }: { result: AnalyzeResponse }) {
-  const { score, requirements, recommendations, rewritten_bullets } = result;
+  const { score, recommendations, rewritten_bullets } = result;
+  // General practice words ("refactoring", "scalability") are shown separately and not scored.
+  const requirements = result.requirements.filter((r) => r.category !== "concept");
+  const concepts = result.requirements.filter((r) => r.category === "concept");
   const byImportance = (a: Requirement, b: Requirement) =>
     Number(b.importance === "required") - Number(a.importance === "required");
   const found = requirements.filter((r) => r.status === "matched").sort(byImportance);
@@ -49,6 +52,22 @@ export default function Report({ result }: { result: AnalyzeResponse }) {
           <KeywordColumn title="Missing" icon="✗" tone="missing" items={missing}
             empty="Nothing missing." />
         </div>
+        {concepts.length > 0 && (
+          <div className="concepts">
+            <p className="small-text">
+              <strong>Also mentioned in the job (not scored):</strong>{" "}
+              <span className="muted">general practice words. Mention them where they fit naturally.</span>
+            </p>
+            <div className="concept-chips">
+              {concepts.map((r, i) => (
+                <span key={`${r.term}-${i}`} className={`pill ${r.status === "matched" ? "matched" : "neutral"}`}
+                  title={r.note}>
+                  {r.status === "matched" ? "✓ " : ""}{r.term}
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
       </section>
 
       {/* 3. Summary */}
